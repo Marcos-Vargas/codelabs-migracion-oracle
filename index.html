@@ -1,0 +1,131 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Tutorial: Realizar Migraciones desde Oracle EX Edition 21c a PostgreSQL y MariaDB</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/claat-public/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="oracle-migration"
+                  title="Tutorial: Realizar Migraciones desde Oracle EX Edition 21c a PostgreSQL y MariaDB"
+                  environment="web"
+                  feedback-link="https://zarin.io">
+    
+      <google-codelab-step label="Pre-requisitos:" duration="0">
+        <ul>
+<li>Oracle Express Edition DB (Version 21C)</li>
+<li>Esquema HR de Oracle Express Edition DB (Version 21C)</li>
+<li>PostgreSQL DB</li>
+<li>Mysql MariaDB</li>
+<li>Windows 10</li>
+<li>Visual Studio Code</li>
+<li>Tener esquemas en la base de datos de ORACLE (HR,OE,U otra creada personalmente)</li>
+</ul>
+<p><strong><em>Nota</em></strong>: Para este laboratorio debera tener acceso y conexion  a las diferentes bases de datos expuestas en los pre requisitos.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Descargar herramientas" duration="0">
+        <ol type="1">
+<li>Como primer paso hay que ir a la pagina de <a href="https://www.dbsofts.com/download/" target="_blank">https://www.dbsofts.com/download/</a> y descargar la version de ESF Database Migration Toolkit - Pro que se ajuste a su windows</li>
+<li>Descargar la herramienta de Visual Studio Code en <a href="https://code.visualstudio.com/download" target="_blank">https://code.visualstudio.com/download</a> e instalarla</li>
+<li>Instalar extension de bases de datos <a href="https://marketplace.visualstudio.com/items?itemName=cweijan.vscode-mysql-client2" target="_blank">https://marketplace.visualstudio.com/items?itemName=cweijan.vscode-mysql-client2</a> y <a href="https://marketplace.visualstudio.com/items?itemName=cweijan.dbclient-jdbc" target="_blank">https://marketplace.visualstudio.com/items?itemName=cweijan.dbclient-jdbc</a>. La version gratuita solo acepta dos conexiones asi que se va a trabjar con solo dos conexiones. Si se conecta de otra manera a las bases de datos omita el paso.</li>
+<li>O entre a la pestaña de extesiones y busque las extenciones dbclient-jdbc y MySQL de Weijan Cgen e instalelas desde la interfaz de VS Code.</li>
+</ol>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Conectate a MariaDb y PostgreSQL con Visual Estudio Code" duration="0">
+        <p>Una vez descargado VS Code e instaladas las extensiciones deberan aparecer dos pestañas en la parte izquierda de la ventana que tiene el icono de una base de datos. Se le debera dar click a ese logo.</p>
+<p class="image-container"><img alt="Imagen de Extension" src="img\\e6aed9a81c75b697.png"></p>
+<p>Y aparecera una pestaña como esta. Debera darle click en &#34;<em>Create Connection</em>&#34;.</p>
+<p class="image-container"><img alt="Alt text" src="img\\9fc09a4d9e7a57fc.png"></p>
+<p>Se desplegara una pestaña como la que vera a continuacion. Una vez hecho se dirige a la parte de la base de datos que desee usar y llena los datos para la conexion.</p>
+<p class="image-container"><img alt="Alt text" src="img\\ea2698ba3fcc8191.png"></p>
+<p><strong>Nota</strong>: No es necesario colocar el nombre de la base de datos. Con Usuario y Contraseña es mas que suficiente</p>
+<p>A continuacion para MariaDB</p>
+<p class="image-container"><img alt="Alt text" src="img\\fb6c572dba2d4c6a.png"></p>
+<p>Y <strong>finalmente</strong> se presiona conectar para conectarse y deberia aparecer en el panel izquierdo de la siguiente forma.</p>
+<p class="image-container"><img alt="Alt text" src="img\\4d566bbdce15554a.png"></p>
+<p class="image-container"><img alt="Alt text" src="img\\54f8b75b4a63f79.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Preparando las bases de datos POSTGRESQL y MARIADB" duration="0">
+        <p>Para este ejemplo se creara una base de datos llamada test y un esquema llamado HR tanto en PostgrSQL y MariaDb para migrar el esquema de ejemplo de ORACLE HR.</p>
+<p>En la pesataña de las bases de datos conectadas dar click en el simbolo de <strong>+</strong></p>
+<p class="image-container"><img alt="Alt text" src="img\\7a792e3a39c021c2.png"></p>
+<p>Se desplegara una pantalla para ejecutar scripts sql donde deberas en legunaje SQL ingresar la sentencia para crear una nueva base de datos</p>
+<pre><code>CREATE DATABASE TEST;
+</code></pre>
+<p class="image-container"><img alt="Alt text" src="img\\4b21460e93b37e8b.png"></p>
+<p>Luego para crear un esquema nos dirigimos a la seccion donde esta nuestra base de datos <code>TEST</code> y seleccionamos el icono con forma de documento</p>
+<p class="image-container"><img alt="Alt text" src="img\\64a45cbe567299ca.png"></p>
+<p>Lo cual abrira una nueva oja de script SQL donde vamos a colocar la sentencia para crear el nuevo esquema <code>HR</code></p>
+<p class="image-container"><img alt="Alt text" src="img\\a544b62bb0fa1c3e.png"></p>
+<pre><code>CREATE SCHEMA HR;
+</code></pre>
+<p>Y con esto terminamos de configurar PostgreSQL.</p>
+<p>Para configurar MariaDB unicamente hay que crear la base de datos con :</p>
+<pre><code>CREATE DATABASE HR;
+</code></pre>
+<p>No es necesario crear el esquema debido a que <code>mariadb</code> no trabaja con esquemas.</p>
+<p>Al Finalizar debera quedar de la siguiente forma la estrucutra de las base de datos.</p>
+<p class="image-container"><img alt="Alt text" src="img\\53a15a676a855126.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Uso de la herramienta ESF Database Migration Toolkit - Pro (32-bit) para la migracion de la base de datos de Oracle Express Edition 21C a PostgreSQL y MariaDB" duration="0">
+        <p><strong>1.</strong> Busque el ejecutable de el archivo ESF Database Migration Toolkit - Pro (32-bit) e inicie la aplicacion.</p>
+<p class="image-container"><img alt="Alt text" src="img\\dea044c8e71edda6.png"></p>
+<p><strong>2.</strong> Debera aparecer una pantalla como la de acontinuacion</p>
+<p class="image-container"><img alt="Alt text" src="img\\d51a9e9614eb5273.png"></p>
+<p><strong>3.</strong> Dar click en <strong>Next</strong>. Aparecera una ventana como la siguiente:</p>
+<p class="image-container"><img alt="Alt text" src="img\\42eee2df7997b7c5.png"></p>
+<p><strong>4.</strong> Selecciona Oracle en la seccion de <em>source</em>. y llena los datos principalmente de <em>Server</em>, &#34;<em>Username</em>&#34; y &#34;<em>Password</em>&#34;, una vez llenados darle click al boton de recargar que aparece en la fila de &#34;<em>Database</em>&#34; y &#34;<em>Schema</em>&#34;. Una vez hecho se verificara la conexion y se mostraran las bases de datos y los esquemas de la base de datos. Para este ejemplo se usara la base de datos &#34;<em>XE</em>&#34; y el esquema HR para migración. Una vez aparezcan seleccionada la base de datos y el esquema a exportar dar click en &#34;<em>Next</em>&#34;</p>
+<p class="image-container"><img alt="Alt text" src="img\\fc91b985c52105d2.png"></p>
+<p><strong>5.</strong> Aparecera una ventana similar a la anterior, pero esta es la base de datos a donde se van a migrar los datos. Tiene que llenar los campos correctamente</p>
+<p class="image-container"><img alt="Alt text" src="img\\1da3a5aef2953554.png"></p>
+<p><strong>6.</strong> En la siguiente ventana debera seleccionar cuales tablas y vistas del esquema son las que desea migrar. Una vez seleccionadas debe dar click en &#34;<em>Next</em>&#34;</p>
+<p class="image-container"><img alt="Alt text" src="img\\dcf9ddec9f027fd1.png"></p>
+<p><strong>7.</strong> Una vez en la siguiente ventana solo queda dar click en &#34;<em>Submit</em>&#34; para empezar la migración.</p>
+<p class="image-container"><img alt="Alt text" src="img\\f8cc31769609b123.png"></p>
+<p class="image-container"><img alt="Alt text" src="img\\656ae525a77db509.png"></p>
+<p><strong>8.</strong> Comprobar en PosgreSQL que la migracion haya sido exitosa.</p>
+<p class="image-container"><img alt="Alt text" src="img\\36db45edefb0061b.png"></p>
+<p>Repita el mismo proceso para migrar a MariaDB</p>
+<p><strong>Nota</strong>: Es importante establecer que al ser una version de prueba, los campos tendran un comentario con el valor de <code>TRIAL</code></p>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/claat-public/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/prettify.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2023-08-27T23:24:27-05:00",
+  "id": "oracle-migration",
+  "duration": 0,
+  "title": "Tutorial: Realizar Migraciones desde Oracle EX Edition 21c a PostgreSQL y MariaDB",
+  "authors": "Marcos Esteban Vargas Avella",
+  "summary": "ORACLE migration",
+  "source": "Tutoriales md/Tutorial Migracion/Tutorial Migracion.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "sample"
+  ],
+  "tags": [
+    "medium"
+  ],
+  "feedback": "https://zarin.io",
+  "url": "oracle-migration"
+}
